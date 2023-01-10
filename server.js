@@ -10,7 +10,7 @@ const { v4: uuidv4 } = require('uuid');
 dotenv.config();
 connecttoMongo();
 const stripe = require('stripe')(process.env.STRIPE_KEY);
-// const stripe = require('stripe')('sk_test_51Jw9OEBh107PE7HCBRIwZVUVMkdIBeTvvRp1a95GKCAGQgG6pZCDbyH0PrLfRRJ0x9MLZ7TkPnROYIPzG28oFc3Y00PIDl4oc4');
+
 var cors = require("cors");
 const port = process.env.PORT || 8080;
 
@@ -22,34 +22,7 @@ app.use("/api/product",productrouter)
 app.use("/user/api", authrouter)
 app.use("/stripe", striperouter)
 
-// app.post("/stripe/create-checkout-session",async (req, res) => {
-    // console.log("tushar")
-    // const myheader = req.header('Authorization')
-    // const token =myheader.split(" ")[1]
-    // const stripe = Stripe(process.env.STRIPE_KEY)
-    // console.log(token)
-//     const session = await stripe.checkout.sessions.create({
-//         line_items: [
-//             {
-//                 price_data: {
-//                     currency: 'usd',
-//                     product_data: {
-//                         name: 'T-shirt',
-//                     },
-//                     unit_amount: 2000,
-//                 },
-//                 quantity: 1,
-//             },
-//         ],
-//         mode: 'payment',
-//         success_url: 'http://localhost:3000/checkout-success',
-//         cancel_url: 'http://localhost:3000/cart',
-//     });
 
-//     res.send({ uri: session.url });
-// }
-// )
-// Create order function
 
 const createOrder = async (customer, payment,cartitems,userId,amount) => {
     
@@ -116,10 +89,7 @@ app.post('/payment',async(req, res) => {
             });
             if (payment) {
                 createOrder(customer,payment,cartitems,userId,amount)
-                //console.log(customer.id)
-                //console.log(payment.id)
-                //console.log(token.card.id)
-                //console.log(customer)
+               
                 status = 'success';
                 res.json({ error, status });
             }
